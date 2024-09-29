@@ -1,0 +1,159 @@
+:root {
+    --background-color: #111;
+    --background-color-secondary: #222;
+    --box-radius: 5px;
+    --box-padding: 0px 50px;
+    --text-color-primary: #fff;
+    --text-color-secondary: #aaa;
+    --text-shadow-color: rgba(255,255,255,45);
+    --link-color: #fff;
+    --glow-color: #fff;
+    --glow-distance: 10px;
+    --glow-blur: 10px;
+    --font-family: "Fredoka", sans-serif;
+
+}
+
+body {
+    position: relative;
+    margin: 5%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color); /* Dark background */
+    font-family: var(--font-family);
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-variation-settings:"wdth" 100;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    position: relative;
+}
+
+hr {
+    border: 1px solid var(--text-color-secondary);
+    opacity: 0.2;
+    width: 80%;
+}
+
+a {
+    color: var(--link-color);
+    /* no highlight after click */
+    -webkit-tap-highlight-color: transparent;
+}
+
+a:hover {
+    color: var(--glow-color);
+    cursor: pointer;
+}
+
+.content-body {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: column;
+    min-width: 75vmax;
+    min-height: 50vmin;
+    margin: 0;
+    padding: var(--box-padding);
+    background-color: var(--background-color-secondary);
+    border-radius: var(--box-radius);
+    /* z-index: 20; */
+}
+
+#content-container {
+    color: var(--text-color-primary);
+    background-color: transparent !important;
+    margin-top: 35%;
+    /* z-index: 10; */
+}
+
+.grid-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200vmin;
+    height: 200vmin;
+    overflow: hidden;
+}
+
+.grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+}
+
+.glow-text {
+    position: relative;
+    top: 50%;
+    color: var(--text-color-primary);
+    opacity: 0.99;
+    text-shadow: 0 0 10px var(--text-shadow-color);
+}
+
+.no-user-interaction {
+    pointer-events: none;
+}
+
+h1.glow-text {
+    font-size: 10vmin;
+}
+
+.grid div {
+    border: 1px solid transparent; /* Transparent border initially */
+    color: transparent;
+    transition: border-color 1s;
+    transition: box-shadow 1s;
+    transition: color 1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-user-select: none; 
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.grid div:hover {
+    border-color: rgba(255, 255, 255, 0.045); /* White glow effect */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.045); /* Glowing effect */
+    color: rgba(255, 255, 255, 0.195);
+}
+
+.grid div.longerglow {
+    border-color: rgba(255, 255, 255, 0.045); /* White glow effect */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.045); /* Glowing effect */
+    color: rgba(255, 255, 255, 0.195);
+}
+
+.grid div.glow {
+    border-color: rgba(255, 255, 255, 0.015) !important; /* White glow effect */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.015) !important; /* Glowing effect */
+    color: rgba(255, 255, 255, 0.135);
+}
+.grid div.glowlow {
+    border-color: rgba(255, 255, 255, 0.010) !important; /* White glow effect */
+    color: rgba(255, 255, 255, 0.120);
+}
+.grid div.radtopright {
+    border-radius: 0 5px 0 0 !important;
+}
+.grid div.radtopleft {
+    border-radius: 5px 0 0 0 !important;
+}
+.grid div.radbottomright {
+    border-radius: 0 0 5px 0 !important;
+}
+.grid div.radbottomleft {
+    border-radius: 0 0 0 5px !important;
+}
