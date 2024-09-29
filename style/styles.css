@@ -55,8 +55,8 @@ a:hover {
     justify-content: center;
     /* align-items: center; */
     flex-direction: column;
-    min-width: 75vmax;
-    min-height: 50vmin;
+    /* min-width: 75vmax; */
+    /* min-height: 50vmin; */
     margin: 0;
     padding: var(--box-padding);
     background-color: var(--background-color-secondary);
@@ -96,7 +96,7 @@ a:hover {
 
 .glow-text {
     position: relative;
-    top: 50%;
+    /* top: 50%; */
     color: var(--text-color-primary);
     opacity: 0.99;
     text-shadow: 0 0 10px var(--text-shadow-color);
@@ -156,4 +156,47 @@ h1.glow-text {
 }
 .grid div.radbottomleft {
     border-radius: 0 0 0 5px !important;
+}
+
+@media screen and (max-width: 748px) {
+    .content-body {
+        max-width: 75%;
+    }
+    body {
+        margin-left: 10%;
+        margin-top: 20%;
+    }
+    h1.glow-text {
+        position: inherit !important;   
+        /* margin-top: 150%; */
+    }
+}
+
+@media screen and (max-width: 560px) {
+    body {
+        margin-top: 50%;
+        margin-left: 20%;
+    }
+}
+@media screen and (max-width: 423px) {
+    body {
+        margin-top: 100%;
+    }
+}
+@media screen and (max-width: 344px) {
+    body {
+        margin-top: 150%;
+    }
+}
+@media screen and (max-width: 296px) {
+    body {
+        margin-top: 200%;
+    }
+}
+@media screen and (max-width: 214px) {
+    body {
+        margin-top: 220%;
+        max-width: 50%;
+        margin-left: 50%;
+    }
 }
