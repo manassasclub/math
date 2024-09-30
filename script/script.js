@@ -4,6 +4,7 @@ const gridSize = 20; // Number of rows and columns
 const symbols = ["+", "-", "%", "×", "=", "√", "∞", "π", "e"];
 var posForRandNums = [0, 1];
 var symbCount = 0;
+var mobileCount = 0;
 
 // Create grid cells dynamically
 for (let i = 0; i < gridSize * gridSize; i++) {
@@ -19,8 +20,9 @@ for (let i = 0; i < gridSize * gridSize; i++) {
     gridContainer.appendChild(cell);
     if (i % symbols.length === 0) {
         symbCount += 5;
+        mobileCount += 2;
     }
-
+    mobileCount++;
     // when held down
     var mouseDown = false;
     cell.addEventListener('mousedown', () => {
@@ -29,7 +31,81 @@ for (let i = 0; i < gridSize * gridSize; i++) {
     cell.addEventListener('mouseup', () => {
         mouseDown = false;
     })
-    cell.addEventListener('mouseover', () => {
+    if (window.outerWidth > 560) {
+        cell.addEventListener('mouseover', () => {
+            if (i > 0) {
+                gridContainer.children[i - 1].classList.add('glow');
+            }
+            if (i > gridSize) {
+                gridContainer.children[i - gridSize].classList.add('glow');
+                gridContainer.children[i - gridSize - 1].classList.add('glowlow');
+                gridContainer.children[i - gridSize - 1].classList.add('radtopleft');
+            }
+            if (i > gridSize + 1) {
+                gridContainer.children[i - gridSize + 1].classList.add('glowlow');
+                gridContainer.children[i - gridSize + 1].classList.add('radtopright');
+            }
+            if (i + 1 < (gridSize * gridSize)) {
+                gridContainer.children[i + 1].classList.add('glow');
+            }
+            if (i + gridSize < (gridSize * gridSize)) {
+                gridContainer.children[i + gridSize].classList.add('glow');
+                gridContainer.children[i + gridSize - 1].classList.add('glowlow');
+                gridContainer.children[i + gridSize - 1].classList.add('radbottomleft');
+            }
+            if (i + gridSize + 1 < (gridSize * gridSize)) {
+                gridContainer.children[i + gridSize + 1].classList.add('glowlow');
+                gridContainer.children[i + gridSize + 1].classList.add('radbottomright');
+            }
+            if (mouseDown) {
+                gridContainer.children[i].classList.add('longerglow');
+                gridContainer.children[i].classList.add('radtopleft');
+                gridContainer.children[i].classList.add('radtopright');
+                gridContainer.children[i].classList.add('radbottomleft');
+                gridContainer.children[i].classList.add('radbottomright');
+                setTimeout(() => {
+                    gridContainer.children[i].classList.remove('longerglow');
+                    gridContainer.children[i].classList.remove('radtopleft');
+                    gridContainer.children[i].classList.remove('radtopright');
+                    gridContainer.children[i].classList.remove('radbottomleft');
+                    gridContainer.children[i].classList.remove('radbottomright');
+                }, 1000);
+            }
+        });
+        cell.addEventListener('mouseout', () => {
+            for (let j = 0; j < gridSize * gridSize; j++) {
+                gridContainer.children[j].classList.remove('glow');
+                gridContainer.children[j].classList.remove('glowlow');
+                gridContainer.children[j].classList.remove('radtopleft');
+                gridContainer.children[j].classList.remove('radtopright');
+                gridContainer.children[j].classList.remove('radbottomleft');
+                gridContainer.children[j].classList.remove('radbottomright');
+            }
+            // const rand = Number(Math.floor(Math.random() * 1000));
+            // if (rand == 0) {
+            //     gridContainer.children[i].classList.add('longerglow');
+            //     setTimeout(() => {
+            //         gridContainer.children[i].classList.remove('longerglow');
+            //     }, 4000);
+            // }
+        });
+    } else {
+        // console.log("i", i);
+        // one by one highlight cells in order
+        addConstantGlow(gridContainer, mobileCount, gridSize, 4000);
+    }
+
+    cell.addEventListener('dblclick', () => {
+        gridContainer.children[i].classList.add('longerglow');
+        setTimeout(() => {
+            gridContainer.children[i].classList.remove('longerglow');
+        }, 4000);
+    });
+}
+
+function addConstantGlow(gridContainer, i, gridSize, totalTimeToTravel=5000) {
+    setTimeout(() => {
+        gridContainer.children[i].classList.add('glow-bright');
         if (i > 0) {
             gridContainer.children[i - 1].classList.add('glow');
         }
@@ -54,54 +130,30 @@ for (let i = 0; i < gridSize * gridSize; i++) {
             gridContainer.children[i + gridSize + 1].classList.add('glowlow');
             gridContainer.children[i + gridSize + 1].classList.add('radbottomright');
         }
-        if (mouseDown) {
-            gridContainer.children[i].classList.add('longerglow');
-            gridContainer.children[i].classList.add('radtopleft');
-            gridContainer.children[i].classList.add('radtopright');
-            gridContainer.children[i].classList.add('radbottomleft');
-            gridContainer.children[i].classList.add('radbottomright');
-            setTimeout(() => {
-                gridContainer.children[i].classList.remove('longerglow');
-                gridContainer.children[i].classList.remove('radtopleft');
-                gridContainer.children[i].classList.remove('radtopright');
-                gridContainer.children[i].classList.remove('radbottomleft');
-                gridContainer.children[i].classList.remove('radbottomright');
-            }, 1000);
-        }
-    });
-    cell.addEventListener('mouseout', () => {
+    }, (totalTimeToTravel/gridSize*gridSize) * i);
+    setTimeout(() => {
         for (let j = 0; j < gridSize * gridSize; j++) {
             gridContainer.children[j].classList.remove('glow');
             gridContainer.children[j].classList.remove('glowlow');
+            gridContainer.children[j].classList.remove('glow-bright');
             gridContainer.children[j].classList.remove('radtopleft');
             gridContainer.children[j].classList.remove('radtopright');
             gridContainer.children[j].classList.remove('radbottomleft');
             gridContainer.children[j].classList.remove('radbottomright');
         }
-        // const rand = Number(Math.floor(Math.random() * 1000));
-        // if (rand == 0) {
-        //     gridContainer.children[i].classList.add('longerglow');
-        //     setTimeout(() => {
-        //         gridContainer.children[i].classList.remove('longerglow');
-        //     }, 4000);
-        // }
-    });
-
-    cell.addEventListener('dblclick', () => {
-        gridContainer.children[i].classList.add('longerglow');
+        // addConstantGlow(gridContainer, i, gridSize);
+    }, (500 + (totalTimeToTravel/gridSize*gridSize)) * i);
+    if (i == 0) {
         setTimeout(() => {
-            gridContainer.children[i].classList.remove('longerglow');
-        }, 4000);
-    });
+            addConstantGlow(gridContainer, i, gridSize, totalTimeToTravel);
+        }, totalTimeToTravel);
+    }
 }
-
-
 
 async function loadMarkdown() {
     var markdownText = "";
     try {
-    // Fetch the markdown file from the server
-    await fetch('public/main.md').then(response => response.text())
+        await fetch('public/main.md').then(response => response.text())
         .then(text => {
             markdownText = text;
         });
@@ -154,7 +206,6 @@ async function loadMarkdown() {
                 markdownText = markdownText.replace(classMatch[0], '');
                 var content = "";
                 while (line.startsWith(".") && classMatch[1]) {
-                    console.log("here", i, classMatch[1]);
                     classes.push(classMatch[1]);
                     if (classMatch[2]) {
                         content = classMatch[2];
@@ -162,7 +213,6 @@ async function loadMarkdown() {
                     line = line.replace("."+classMatch[1], '');
                     classMatch = line.trim().match(/^\.([^.\s]+)\s*(.*)$/m);
                 }
-                console.log(classes);
                 if (classes.length>0 && openedTags.includes(classes[classes.length-1])) {
                     currentDiv = document.getElementsByClassName(currentDiv)[document.getElementsByClassName(currentDiv).length-1].parentElement.classList[0];
                     delete openedTags[openedTags.indexOf(currentDiv)];

@@ -1,4 +1,10 @@
 :root {
+    --color-opacity: 0.195;
+    --color-opacity-low: 0.135;
+    --color-opacity-low-2: 0.120;
+    --border-opacity: 0.045;
+    --border-opacity-low: 0.025;
+    --border-opacity-low-2: 0.010;
     --background-color: #111;
     --background-color-secondary: #222;
     --box-radius: 5px;
@@ -7,11 +13,16 @@
     --text-color-secondary: #aaa;
     --text-shadow-color: rgba(255,255,255,45);
     --link-color: #fff;
-    --glow-color: #fff;
+    --glow-color: rgba(255, 255, 255, var(--color-opacity));
+    --glow-border-color: rgb(255, 255, 255, var(--border-opacity));
+    --glow-color-low: rgba(255, 255, 255, var(--color-opacity-low));
+    --glow-border-color-low: rgb(255, 255, 255, var(--border-opacity-low));
+    --glow-color-low-2: rgba(255, 255, 255, var(--color-opacity-low-2));
+    --glow-border-color-low-2: rgb(255, 255, 255, var(--border-opacity-low-2));
     --glow-distance: 10px;
     --glow-blur: 10px;
     --font-family: "Fredoka", sans-serif;
-
+    
 }
 
 body {
@@ -81,17 +92,19 @@ a:hover {
     width: 200vmin;
     height: 200vmin;
     overflow: hidden;
+    margin: -5%;
 }
 
 .grid {
     position: absolute;
+    margin: 0;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     display: grid;
     grid-template-columns: repeat(20, 1fr);
-    grid-template-rows: repeat(20, 1fr);
+    /* grid-template-rows: repeat(20, 1fr); */
 }
 
 .glow-text {
@@ -125,25 +138,31 @@ h1.glow-text {
 }
 
 .grid div:hover {
-    border-color: rgba(255, 255, 255, 0.045); /* White glow effect */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.045); /* Glowing effect */
-    color: rgba(255, 255, 255, 0.195);
+    border-color: var(--glow-border-color); /* White glow effect */
+    box-shadow: 0 0 10px var(--glow-border-color); /* Glowing effect */
+    color: var(--glow-color);
+}
+
+.glow-bright {
+    border-color: var(--glow-border-color); /* White glow effect */
+    box-shadow: 0 0 10px var(--glow-border-color); /* Glowing effect */
+    color: var(--glow-color);
 }
 
 .grid div.longerglow {
-    border-color: rgba(255, 255, 255, 0.045); /* White glow effect */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.045); /* Glowing effect */
-    color: rgba(255, 255, 255, 0.195);
+    border-color: var(--glow-border-color); /* White glow effect */
+    box-shadow: 0 0 10px var(--glow-border-color); /* Glowing effect */
+    color: var(--glow-color);
 }
 
 .grid div.glow {
-    border-color: rgba(255, 255, 255, 0.015) !important; /* White glow effect */
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.015) !important; /* Glowing effect */
-    color: rgba(255, 255, 255, 0.135);
+    border-color: var(--glow-border-color-low) !important; /* White glow effect */
+    box-shadow: 0 0 10px var(--glow-border-color-low) !important; /* Glowing effect */
+    color: var(--glow-color-low);
 }
 .grid div.glowlow {
-    border-color: rgba(255, 255, 255, 0.010) !important; /* White glow effect */
-    color: rgba(255, 255, 255, 0.120);
+    border-color: var(--glow-border-color-low-2) !important; /* White glow effect */
+    color: var(--glow-color-low-2);
 }
 .grid div.radtopright {
     border-radius: 0 5px 0 0 !important;
@@ -158,6 +177,26 @@ h1.glow-text {
     border-radius: 0 0 0 5px !important;
 }
 
+/* light mode */
+@media screen and (prefers-color-scheme: light) {
+    :root {
+        --background-color: #fff;
+        --background-color-secondary: #eee;
+        --box-radius: 5px;
+        --box-padding: 0px 50px;
+        --text-color-primary: #111;
+        --text-color-secondary: #333;
+        /* --text-shadow-color: rgba(10,10,10,45); */
+        --link-color: #111;
+        --glow-color: rgba(0,0,0, var(--color-opacity));
+        --glow-border-color: rgb(0,0,0, var(--border-opacity));
+        --glow-color-low: rgba(0,0,0, var(--color-opacity-low));
+        --glow-border-color-low: rgb(0,0,0, var(--border-opacity-low));
+        --glow-color-low-2: rgba(0,0,0, var(--color-opacity-low-2));
+        --glow-border-color-low-2: rgb(0,0,0, var(--border-opacity-low-2));
+    }
+}
+
 @media screen and (max-width: 748px) {
     .content-body {
         max-width: 75%;
@@ -166,9 +205,18 @@ h1.glow-text {
         margin-left: 10%;
         margin-top: 20%;
     }
+    .grid-container {
+        margin-left: -10%;
+        margin-top: -20%;
+    }
     h1.glow-text {
         position: inherit !important;   
         /* margin-top: 150%; */
+    }
+    .grid div {
+        transition: border-color 0s;
+        transition: box-shadow 0s;
+        transition: color 0s;
     }
 }
 
@@ -179,20 +227,33 @@ h1.glow-text {
         max-width: 100%;
         overflow-x: hidden;
     }
+    .grid-container {
+        margin-top: -50%;
+        margin-left: -20%;
+    }
 }
 @media screen and (max-width: 423px) {
     body {
         margin-top: 100%;
+    }
+    .grid-container {
+        margin-top: -100%;
     }
 }
 @media screen and (max-width: 344px) {
     body {
         margin-top: 150%;
     }
+    .grid-container {
+        margin-top: -150%;
+    }
 }
 @media screen and (max-width: 296px) {
     body {
         margin-top: 200%;
+    }
+    .grid-container {
+        margin-top: -200%;
     }
 }
 @media screen and (max-width: 214px) {
@@ -200,5 +261,9 @@ h1.glow-text {
         margin-top: 220%;
         max-width: 50%;
         margin-left: 50%;
+    }
+    .grid-container {
+        margin-top: -220%;
+        margin-left: -50%;
     }
 }
