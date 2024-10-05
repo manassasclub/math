@@ -8,11 +8,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="grid-container">
-        <div class="grid"></div>
-    </div>
-    <div class="content-container" id="content-container">
-        <!-- Loading content... -->
+    <nav id="navbar" class="navbar" role="navigation" aria-label="main navigation">
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item current-page" to="main">
+            Main
+          </a>
+    
+          <a class="navbar-item" to="about">
+            About Us
+          </a>
+
+          <a class="navbar-item" to="mission">
+            Mission
+          </a>
+
+          <a class="navbar-item" to="whales">
+            Whales
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div class="body">
+        <div class="grid-container">
+            <div class="grid"></div>
+        </div>
+        <div class="content-container" id="content-container">
+            <!-- Loading content... -->
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="script/script.js"></script>

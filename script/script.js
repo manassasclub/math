@@ -1,5 +1,12 @@
 const gridContainer = document.querySelector('.grid');
 const gridSize = 20; // Number of rows and columns
+var currentScreen = "main";
+if (localStorage.getItem('lastVisitedPage') != null) {
+    currentScreen = localStorage.getItem('lastVisitedPage');
+    document.querySelector('.navbar-item.current-page').classList.remove('current-page');
+    document.querySelector(`[to="${currentScreen}"]`).classList.add('current-page');
+}
+var screenNames = ["main", "about", "mission", "whales"];
 
 const symbols = ["+", "-", "%", "×", "=", "√", "∞", "π", "e"];
 var posForRandNums = [0, 1];
@@ -25,11 +32,31 @@ for (let i = 0; i < gridSize * gridSize; i++) {
     mobileCount++;
     // when held down
     var mouseDown = false;
+    var count = 0;
+    var timeOut = 0;
     cell.addEventListener('mousedown', () => {
         mouseDown = true;
+        count++;
+        console.log(count);
+        if (count > 1) {
+            clearTimeout(timeOut);
+        }
+        if (count > 10) {
+            count = 0;
+            let userInput = prompt('Are you a bloger?');
+            if (!userInput.toLowerCase().includes('n') && userInput.toLowerCase().includes('y')) {
+                let password = prompt('Enter your password');
+                if (password == '2+2!=5') {
+                    window.location.href = 'https:///';
+                }
+            }
+        }
     });
     cell.addEventListener('mouseup', () => {
         mouseDown = false;
+        timeOut = setTimeout(() => {
+            count = 0;
+        }, 500);
     })
     if (window.outerWidth > 560) {
         cell.addEventListener('mouseover', () => {
@@ -150,13 +177,13 @@ function addConstantGlow(gridContainer, i, gridSize, totalTimeToTravel=5000) {
     }
 }
 
-async function loadMarkdown() {
-    var markdownText = "";
+async function loadMarkdown(page) {
     try {
-        await fetch('public/main.md').then(response => response.text())
+        await fetch(`public/${page}.md`).then(response => response.text())
         .then(text => {
             markdownText = text;
         });
+        localStorage.setItem('lastVisitedPage', page);
     } catch (error) {
         console.error('Error fetching the markdown file:', error);
         document.getElementById('content-container').innerText = 'Error loading content.';
@@ -259,5 +286,15 @@ async function loadMarkdown() {
     // document.getElementById('content-container').innerHTML += htmlContent;
 }
 
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('navbar-item')) {
+        document.getElementById('content-container').innerHTML = "";
+        document.querySelector('.navbar-item.current-page').classList.remove('current-page');
+        event.target.classList.add('current-page');
+        currentScreen = event.target.getAttribute('to');
+        loadMarkdown(currentScreen);
+    }
+});
+
 // Call the function on page load
-window.onload = loadMarkdown;
+window.onload = loadMarkdown(currentScreen);

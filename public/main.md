@@ -6,13 +6,8 @@
 
 
 
-
-
-
-
 .glow-text.no-user-interaction # Math Ninjas
 .glow-text [@novamathclub_](https://www.instagram.com/novamathclub_/)
-
 
 
 
