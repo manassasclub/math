@@ -1,4 +1,4 @@
-#title = Math Club Manassas | Mission
+#title = Math Club Manassas | Events
 
 
 

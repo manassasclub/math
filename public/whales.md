@@ -1,4 +1,4 @@
-#title = Math Club Manassas | Mission
+#title = Math Club Manassas | Whales?
 #whales-grid = true
 
 .glow-text.no-user-interaction # SUPER SECRET!!!
